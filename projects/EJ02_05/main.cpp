@@ -20,17 +20,21 @@
 
 #include <iostream>				// Librería de funciones del sistema
 
-#include <stdio.h>
-#include <math.h>
+#include <stdio.h>				// Librería de funciones del sistema
+#include <math.h>				// Librería matemática
 //-----------------------------LIBRERÍAS-----------------------------//
+
+//---------------CONSTANTES---------------//
+#define PI    3.14159265	// Número PI
+//---------------CONSTANTES---------------//
 
 //----------------------------------------------FUNCIÓN HANDLEINPUT----------------------------------------------//
 void handleInput() {
 	// Función de manejo de entradas
-	std::vector<std::pair<int, int>> keys = Input::instance()->getKeys();	// Obtención de teclas pulsadas
-	for (auto& key : keys) {
-		std::cout << key.first << " - " << key.second << std::endl;			// Impresión de la tecla pulsada
-	}
+	//std::vector<std::pair<int, int>> keys = Input::instance()->getKeys();	// Obtención de teclas pulsadas
+	//for (auto& key : keys) {
+	//	std::cout << key.first << " - " << key.second << std::endl;			// Impresión de la tecla pulsada
+	//}
 }
 //----------------------------------------------FUNCIÓN HANDLEINPUT----------------------------------------------//
 
@@ -111,16 +115,16 @@ uint32_t createProgram() {
 //-----------------------------------------------FUNCIÓN CREATEVERTEXDATA-----------------------------------------------//
 uint32_t createVertexData(uint32_t* VBO, uint32_t* EBO) {
 	// Creación de los vertices de los triangulos
-	float coord_y = sqrt(3)/4;
+	float coord_y = sin((60*PI)/180)*0.5;
 	// Vértices de los triángulos
 	float vertices[] = {
-		  0.0f,     0.0f, 0.0f,
-		  0.5f,     0.0f, 0.0f,	// Vértice 0
-		 0.25f,  coord_y, 0.0f,	// Vértice 1
-		-0.25f,  coord_y, 0.0f,	// Vértice 2
-		 -0.5f,     0.0f, 0.0f,	// Vértice 3
-		-0.25f, -coord_y, 0.0f,	// Vértice 4
-		 0.25f, -coord_y, 0.0f		// Vértice 5
+		  0.0f,     0.0f, 0.0f,		// Vértice 0
+		  0.5f,     0.0f, 0.0f,		// Vértice 1
+		 0.25f,  coord_y, 0.0f,		// Vértice 2
+		-0.25f,  coord_y, 0.0f,		// Vértice 3
+		 -0.5f,     0.0f, 0.0f,		// Vértice 4
+		-0.25f, -coord_y, 0.0f,		// Vértice 5
+		 0.25f, -coord_y, 0.0f		// Vértice 6
 	};
 
 	// Definición de los triángulos a partir de los vértices
@@ -129,8 +133,8 @@ uint32_t createVertexData(uint32_t* VBO, uint32_t* EBO) {
 		2, 3, 0,																		// Segundo triángulo
 		3, 4, 0,																		// Tercer triángulo
 		4, 5, 0,																		// Cuarto triángulo
-		0, 5, 6,
-		0, 6, 1
+		0, 5, 6,																		// Quinto triángulo
+		0, 6, 1																			// Sexto triángulo
 	};
 
 	uint32_t VAO;																		// Generación del VAO

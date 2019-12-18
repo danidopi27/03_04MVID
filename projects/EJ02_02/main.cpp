@@ -113,7 +113,6 @@ uint32_t createVertexData_triangle1(uint32_t* VBO) {
 		0.5f, -0.5f, 0.0f,
 		0.0f, -0.5f, 0.0f,
 		0.25f, 0.5f, 0.0f,
-
 	};
 
 	uint32_t VAO;																		// Generación del VAO
