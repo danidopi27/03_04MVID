@@ -105,6 +105,46 @@ uint32_t createProgram() {
 }
 //---------------------------------------FUNCIÓN CREATEPROGRAM---------------------------------------//
 
+//---------------------------------------FUNCIÓN CREATEPROGRAM_2---------------------------------------//
+uint32_t createProgram_2() {
+	// Función de creación de programa
+
+	// Código fuente del vertex shader
+	const char* vertexShaderSource = "#version 330 core\n"
+		"layout (location=0) in vec3 aPos;\n"
+		"void main() {\n"
+		"    gl_Position = vec4(aPos, 1.0);\n"
+		"}\0";
+	// Código fuente del fragment shader
+	const char* fragmentShaderSource = "#version 330 core\n"
+		"out vec4 FragColor;\n"
+		"void main() {\n"
+		"    FragColor = vec4(1.0, 0.1, 0.0, 1.0);\n"
+		"}\0";
+
+	const uint32_t vertexShader = glCreateShader(GL_VERTEX_SHADER);			// Generar shader
+	glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);			// Subir los datos
+	glCompileShader(vertexShader);											// Compilar el shader
+	checkShader(vertexShader);												// Comprobar shader
+
+	const uint32_t fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);		// Generar shader
+	glShaderSource(fragmentShader, 1, &fragmentShaderSource, nullptr);		// Subir los datos
+	glCompileShader(fragmentShader);										// Compilar el shader
+	checkShader(fragmentShader);											// Comprobar shader
+
+	const uint32_t program = glCreateProgram();								// Creación del programa
+	glAttachShader(program, vertexShader);									// Se asigna un shader
+	glAttachShader(program, fragmentShader);								// Se asigna un shader
+	glLinkProgram(program);													// Se unen al programa
+	checkProgram(program);													// Comprobar programa
+
+	glDeleteShader(vertexShader);											// Borrado de shader
+	glDeleteShader(fragmentShader);											// Borrado de shader
+
+	return program;															// Se retorna programa
+}
+//---------------------------------------FUNCIÓN CREATEPROGRAM_2---------------------------------------//
+
 //-----------------------------------------------FUNCIÓN CREATEVERTEXDATA-----------------------------------------------//
 uint32_t createVertexData(uint32_t* VBO, uint32_t* EBO) {
 	// Creación de los vertices de los triangulos
@@ -151,13 +191,16 @@ uint32_t createVertexData(uint32_t* VBO, uint32_t* EBO) {
 //-----------------------------------------------FUNCIÓN CREATEVERTEXDATA-----------------------------------------------//
 
 //----------------------------------------FUNCIÓN RENDER----------------------------------------//
-void render(uint32_t VAO, uint32_t program) {
+void render(uint32_t VAO, uint32_t program, uint32_t program2) {
 	// Renderización del VAO en el programa
 	glClear(GL_COLOR_BUFFER_BIT);									// Se borra el buffer
 
 	glUseProgram(program);											// Se asigna el program
 	glBindVertexArray(VAO);											// Se asigna el VAO
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);		// Se dibujan los elementos
+	glUseProgram(program2);											// Se asigna el program
+	glBindVertexArray(VAO);											// Se asigna el VAO
+	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);		// Se dibujan los elementos
 }
 //----------------------------------------FUNCIÓN RENDER----------------------------------------//
 
@@ -170,6 +213,7 @@ int main(int, char* []) {
 	uint32_t VBO, EBO;										// Creación del VBO y el EBO
 	const uint32_t VAO = createVertexData(&VBO, &EBO);		// Creación de los vértices
 	const uint32_t program = createProgram();				// Se crea un programa
+	const uint32_t program2 = createProgram_2();			// Se crea otro programa (distinto color)
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);				// Modo polygon para mostrar las lineas y relleno
 
@@ -179,7 +223,7 @@ int main(int, char* []) {
 	// Mientras la ventana siga abierta
 	while (window->alive()) {
 		handleInput();										// Se controlan las entradas
-		render(VAO, program);								// Se renderiza el VAO en el program
+		render(VAO, program, program2);						// Se renderiza el VAO en el program
 		window->frame();									// Se dibuja la ventana
 	}
 
