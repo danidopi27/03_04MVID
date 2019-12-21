@@ -31,10 +31,10 @@
 //----------------------------------------------FUNCIÓN HANDLEINPUT----------------------------------------------//
 void handleInput() {
 	// Función de manejo de entradas
-	std::vector<std::pair<int, int>> keys = Input::instance()->getKeys();	// Obtención de teclas pulsadas
-	for (auto& key : keys) {
-		std::cout << key.first << " - " << key.second << std::endl;			// Impresión de la tecla pulsada
-	}
+	//std::vector<std::pair<int, int>> keys = Input::instance()->getKeys();	// Obtención de teclas pulsadas
+	//for (auto& key : keys) {
+	//	std::cout << key.first << " - " << key.second << std::endl;			// Impresión de la tecla pulsada
+	//}
 }
 //----------------------------------------------FUNCIÓN HANDLEINPUT----------------------------------------------//
 
