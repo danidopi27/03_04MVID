@@ -111,11 +111,11 @@ uint32_t createVertexData(uint32_t* VBO, uint32_t* EBO) {
 
 	// Vértices de los triángulos
 	float vertices[] = {
-		0.5f, -0.5f, 0.0f,
-		0.25f, 0.5f, 0.0f,
-		0.0f, -0.5f, 0.0f,
-		-0.25f, 0.5f, 0.0f,
-		-0.5f, -0.5f, 0.0f,
+		  0.5f, -0.5f, 0.0f,
+		 0.25f,  0.5f, 0.0f,
+		  0.0f, -0.5f, 0.0f,
+		-0.25f,  0.5f, 0.0f,
+		 -0.5f, -0.5f, 0.0f,
 	};
 
 	// Definición de los triángulos a partir de los vértices
