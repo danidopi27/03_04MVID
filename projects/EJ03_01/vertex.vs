@@ -12,7 +12,7 @@
 ///////////////////////////////////////////////////////////////////////CÓDIGO//////////////////////////////////////////////////////////////////////
 #version 330 core
 
-layout (location=0) in vec3 aPos;               // La posición 1 corresponde a posición
+layout (location=0) in vec3 aPos;               // La posición 0 corresponde a posición
 layout (location=1) in vec3 aColor;             // La posición 1 corresponde a color
 
 out vec3 myColor;                               // Salida de color
