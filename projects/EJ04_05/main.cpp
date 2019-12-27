@@ -13,7 +13,7 @@
 
 //-------------------------------LIBRERÍAS-------------------------------//
 #include <glad/glad.h>				// Librería de manejo de GLAD
-#include <GLFW/glfw3.h>
+#include <GLFW/glfw3.h>				// Librería de manejo de GLFW
 
 #include "engine/input.hpp"			// Librería de manejo de inputs
 #include "engine/window.hpp"		// Librería de manejo de ventanas
