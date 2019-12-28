@@ -25,6 +25,6 @@ uniform mat4 proj;                                              // Matriz de pro
 
 void main() {
     UV = aUV;                                                   // Asignación de textura para fragment.fs
-    gl_Position = proj * view * model * vec4(aPos, 1.0);        // Se asigna la posición transformada
+    gl_Position = proj * model * view * vec4(aPos, 1.0);        // Se asigna la posición transformada
 }
 ////////////////////////////////////////////////////////////////////FIN DE CÓDIGO//////////////////////////////////////////////////////////////////
