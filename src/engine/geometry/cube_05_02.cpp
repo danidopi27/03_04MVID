@@ -2,7 +2,7 @@
 
   CURSO:	   Máster en Diseño y Desarrollo de Videojuegos
   ASIGNATURA:  Programación I
-  DESCRIPCIÓN: Librería de generación de cubos mediante centro y radio
+  DESCRIPCIÓN: Librería de generación de cubos mediante centro y radio y con una textura de cubo
   PROGRAMADOR: Daniel Dopico Graña
   FECHA:       Diciembre 2019
   VERSIÓN:     1.0
@@ -12,11 +12,11 @@
 //////////////////////////////////////////////////////////////////////CÓDIGO/////////////////////////////////////////////////////////////////////
 
 //----------------------------------------------LIBRERÍAS----------------------------------------------//
-#include "engine/geometry/cube_05_01.hpp"	// Librería de creación de cubos mediante centro y radio
+#include "engine/geometry/cube_05_02.hpp"	// Librería de creación de cubos mediante centro y radio
 //----------------------------------------------LIBRERÍAS----------------------------------------------//
 
-//--------------------------------------------CONSTRUCTOR CUBE_05_01--------------------------------------------//
-Cube_05_01::Cube_05_01(float* center, float radio) {
+//--------------------------------------------CONSTRUCTOR CUBE_05_02--------------------------------------------//
+Cube_05_02::Cube_05_02(float* center, float radio) {
     _nVertices = 6 * 2 * 3;								// 6 caras * 2 triángulos * 3 vértices;
     _nElements = _nVertices;							// Nº de elementos = Nº de vértices
 
@@ -81,53 +81,53 @@ Cube_05_01::Cube_05_01(float* center, float radio) {
                           x_neg, y_pos, z_neg};
 
 	// Posición de la textura
-    float uvs[] = { 0.0f, 0.0f,							// Cara delantera
-                    1.0f, 0.0f,
-                    1.0f, 1.0f,
+    float uvs[] = { 0.25f,  0.5f,						// Cara delantera
+                     0.5f,  0.5f,
+                     0.5f, 0.75f,
 
-                    0.0f, 0.0f,
-                    1.0f, 1.0f,
-                    0.0f, 1.0f,
+					0.25f,  0.5f,
+					 0.5f, 0.75f,
+                    0.25f, 0.75f,
 
-                    0.0f, 0.0f,							// Cara lateral derecha
-                    1.0f, 0.0f,
-                    1.0f, 1.0f,
+                     0.5f,  0.5f,						// Cara lateral derecha
+                    0.75f,  0.5f,
+                    0.75f, 0.75f,
 
-                    0.0f, 0.0f,
-                    1.0f, 1.0f,
-                    0.0f, 1.0f,
+					 0.5f,  0.5f,
+					0.75f, 0.75f,
+                     0.5f, 0.75f,
 
-                    0.0f, 0.0f,							// Cara trasera
-                    1.0f, 0.0f,
-                    1.0f, 1.0f,
+                    0.75f,  0.5f,						// Cara trasera
+                     1.0f,  0.5f,
+                     1.0f, 0.75f,
 
-                    0.0f, 0.0f,
-                    1.0f, 1.0f,
-                    0.0f, 1.0f,
+					0.75f,  0.5f,
+					 1.0f, 0.75f,
+                    0.75f, 0.75f,
 
-                    0.0f, 0.0f,							// Cara lateral izquierda
-                    1.0f, 0.0f,
-                    1.0f, 1.0f,
+                     0.0f,  0.5f,						// Cara lateral izquierda
+                    0.25f,  0.5f,
+                    0.25f, 0.75f,
 
-                    0.0f, 0.0f,
-                    1.0f, 1.0f,
-                    0.0f, 1.0f,
+					 0.0f,  0.5f,
+					0.25f, 0.75f,
+                     0.0f, 0.75f,
 
-                    0.0f, 0.0f,							// Cara inferior
-                    1.0f, 0.0f,
-                    1.0f, 1.0f,
+                    0.25f, 0.25f,						// Cara inferior
+                     0.5f, 0.25f,
+                     0.5f,  0.5f,
 
-                    0.0f, 0.0f,
-                    1.0f, 1.0f,
-                    0.0f, 1.0f,
+					0.25f, 0.25f,
+					 0.5f,  0.5f,
+                    0.25f,  0.5f,
 
-                    0.0f, 0.0f,							// Cara superior
-                    1.0f, 0.0f,
-                    1.0f, 1.0f,
+                    0.25f, 0.75f,						// Cara superior
+                     0.5f, 0.75f,
+                     0.5,   1.0f,
 
-                    0.0f, 0.0f,
-                    1.0f, 1.0f,
-                    0.0f, 1.0f};
+					0.25f, 0.75f,
+					 0.5,   1.0f,
+                    0.25f,  1.0f};
 
 	// Posición de los vectores normales
     float normals[] = { 0.0f, 0.0f, 1.0f,				// Cara delantera
@@ -178,7 +178,7 @@ Cube_05_01::Cube_05_01(float* center, float radio) {
                         0.0f, 1.0f, 0.0f,
                         0.0f, 1.0f, 0.0f};
 
-	// Indice de los vértices
+	// Indices de los vértices
     uint32_t indices[] = { 0,  1,  2,    3,  4,  5,		// Cara delantera
                            6,  7,  8,    9, 10, 11,		// Cara lateral derecha
                           12, 13, 14,   15, 16, 17,		// Cara trasera
@@ -188,6 +188,6 @@ Cube_05_01::Cube_05_01(float* center, float radio) {
 
     uploadData(positions, uvs, normals, indices);		// Se suben los datos
 }
-//--------------------------------------------CONSTRUCTOR CUBE_05_01--------------------------------------------//
+//--------------------------------------------CONSTRUCTOR CUBE_05_02--------------------------------------------//
 
 //////////////////////////////////////////////////////////////////FIN DE CÓDIGO//////////////////////////////////////////////////////////////////
