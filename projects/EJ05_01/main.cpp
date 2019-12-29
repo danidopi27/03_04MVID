@@ -11,17 +11,17 @@
 
 ////////////////////////////////////////////////////////////////////////////CÓDIGO///////////////////////////////////////////////////////////////////////////
 
-//--------------------------------------LIBRERÍAS--------------------------------------//
+//------------------------------------------LIBRERÍAS------------------------------------------//
 #include <glad/glad.h>						// Librería de manejo de GLAD
 
 #include "engine/window.hpp"				// Librería de manejo de ventanas
 #include "engine/shader.hpp"				// Librería de manejo de shaders
 #include "engine/texture.hpp"				// Librería de manejo de texturas
-#include "engine/cube_05_01.hpp"			// Librería de manejo de geometría cubo
+#include "engine/geometry/cube_05_01.hpp"	// Librería de manejo de geometría cubo modificada
 
 #include <glm/gtc/matrix_transform.hpp>		// Librería de transformación de matrices
 #include <GLFW/glfw3.h>						// Librería de manejo de GLFW
-//--------------------------------------LIBRERÍAS--------------------------------------//
+//------------------------------------------LIBRERÍAS------------------------------------------//
 
 //---------------FUNCIÓN HANDLEINPUT---------------//
 void handleInput() {/*Intentionally Left BLank*/ }
@@ -58,9 +58,11 @@ int main(int, char* []) {
 	glClearColor(0.0f, 0.3f, 0.6f, 1.0f);														// Color de la ventana
 
 	const Shader shader("../projects/EJ05_01/vertex.vs", "../projects/EJ05_01/fragment.fs");	// Carga de los shaders
-	const Cube_05_01 cube_05_01(1.0f);
+	float center[3] = { -0.5f, 0.25f, -0.5f };													// Coordenadas del centro
+	float radio = 0.25f;																		// Radio del cubo
+	const Cube_05_01 cube_05_01(center, radio);													// Creación del cubo
 
-	Texture tex("../assets/textures/blue_blocks.jpg", Texture::Format::RGB);					// Creación de la texturA
+	Texture tex("../assets/textures/blue_blocks.jpg", Texture::Format::RGB);					// Creación de la textura
 
 	glEnable(GL_CULL_FACE);																		// Activación del cull face
 	glCullFace(GL_BACK);																		// Ocultar la cara trasera
@@ -68,7 +70,7 @@ int main(int, char* []) {
 	// Mientras la ventana siga abierta
 	while (window->alive()) {
 		handleInput();																			// Se controlan las entradas
-		render(cube, shader, tex);																// Se renderiza el cubo, shader y texturas
+		render(cube_05_01, shader, tex);														// Se renderiza el cubo, shader y texturas
 		window->frame();																		// Se dibuja la ventana
 	}
 

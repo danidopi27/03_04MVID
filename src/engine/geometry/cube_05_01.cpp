@@ -1,60 +1,87 @@
-#include "engine/geometry/cube_05_01.hpp"
+/*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Cube_05_01::Cube_05_01(float size) : _size(size) {
-    _nVertices = 6 * 2 * 3;   //6 faces * 2 triangles * 3 vertices;
-    _nElements = _nVertices;
+  CURSO:	   Máster en Diseño y Desarrollo de Videojuegos
+  ASIGNATURA:  Programación I
+  DESCRIPCIÓN: Librería de generación de cubos mediante centro y radio
+  PROGRAMADOR: Daniel Dopico Graña
+  FECHA:       Diciembre 2019
+  VERSIÓN:     1.0
 
-    const float half = size / 2.0f;
+*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    float positions[] = { -half, -half, half,    //front
-                          half, -half, half,
-                          half, half, half,
+//////////////////////////////////////////////////////////////////////CÓDIGO/////////////////////////////////////////////////////////////////////
 
-                          -half, -half, half,
-                          half, half, half,
-                          -half, half, half,
+//----------------------------------------------LIBRERÍAS----------------------------------------------//
+#include "engine/geometry/cube_05_01.hpp"	// Librería de creación de cubos mediante centro y radio
+//----------------------------------------------LIBRERÍAS----------------------------------------------//
 
-                          half, -half, half,    //right
-                          half, -half, -half,
-                          half, half, -half,
+//--------------------------------------------CONSTRUCTOR CUBE_05_01--------------------------------------------//
+Cube_05_01::Cube_05_01(float* center, float radio) {
+    _nVertices = 6 * 2 * 3;								// 6 caras * 2 triángulos * 3 vértices;
+    _nElements = _nVertices;							// Nº de elementos = Nº de vértices
 
-                          half, -half, half,
-                          half, half, -half,
-                          half, half, half,
+	const float x = center[0];							// Coordenada en x del centro del cubo
+	const float y = center[1];							// Coordenada en y del centro del cubo
+	const float z = center[2];							// Coordenada en z del centro del cubo
 
-                          half, -half, -half,    //back
-                          -half, -half, -half,
-                          -half, half, -half,
+	float x_pos = x + radio;							// Coordenada hacia la derecha del centro en x
+	float x_neg = x - radio;							// Coordenada hacia la izquierda del centro en x
+	float y_pos = y + radio;							// Coordenada hacia arriba del centro en y
+	float y_neg = y - radio;							// Coordenada hacia abajo del centro en y
+	float z_pos = z + radio;							// Coordenada hacia adelante del centro en z
+	float z_neg = z - radio;							// Coordenada hacia atrás del centro en z
 
-                          half, -half, -half,
-                          -half, half, -half,
-                          half, half, -half,
+	// Posición de los vértices
+    float positions[] = { x_neg, y_neg, z_pos,			// Cara delantera
+						  x_pos, y_neg, z_pos,
+						  x_pos, y_pos, z_pos,
 
-                          -half, -half, -half,    //left
-                          -half, -half, half,
-                          -half, half, half,
+						  x_neg, y_neg, z_pos,
+						  x_pos, y_pos, z_pos,
+						  x_neg, y_pos, z_pos,
 
-                          -half, -half, -half,
-                          -half, half, half,
-                          -half, half, -half,
+						  x_pos, y_neg, z_pos,			// Cara lateral derecha
+						  x_pos, y_neg, z_neg,
+						  x_pos, y_pos, z_neg,
 
-                          -half, -half, -half,    //bottom
-                          half, -half, -half,
-                          half, -half, half,
+						  x_pos, y_neg, z_pos,
+						  x_pos, y_pos, z_neg,
+						  x_pos, y_pos, z_pos,
 
-                          -half, -half, -half,
-                          half, -half, half,
-                          -half, -half, half,
+						  x_pos, y_neg, z_neg,			// Cara trasera
+						  x_neg, y_neg, z_neg,
+						  x_neg, y_pos, z_neg,
 
-                          -half, half, half,    //top
-                          half, half, half,
-                          half, half, -half,
+						  x_pos, y_neg, z_neg,
+						  x_neg, y_pos, z_neg,
+						  x_pos, y_pos, z_neg,
 
-                          -half, half, half,
-                          half, half, -half,
-                          -half, half, -half};
+						  x_neg, y_neg, z_neg,			// Cara lateral izquierda
+						  x_neg, y_neg, z_pos,
+						  x_neg, y_pos, z_pos,
 
-    float uvs[] = { 0.0f, 0.0f,   //front
+						  x_neg, y_neg, z_neg,
+						  x_neg, y_pos, z_pos,
+						  x_neg, y_pos, z_neg,
+
+						  x_neg, y_neg, z_neg,			// Cara inferior
+						  x_pos, y_neg, z_neg,
+						  x_pos, y_neg, z_pos,
+
+						  x_neg, y_neg, z_neg,
+						  x_pos, y_neg, z_pos,
+						  x_neg, y_neg, z_pos,
+
+						  x_neg, y_pos, z_pos,			// Cara superior
+						  x_pos, y_pos, z_pos,
+						  x_pos, y_pos, z_neg,
+
+						  x_neg, y_pos, z_pos,
+						  x_pos, y_pos, z_neg,
+                          x_neg, y_pos, z_neg};
+
+	// Posición de la textura
+    float uvs[] = { 0.0f, 0.0f,							// Cara delantera
                     1.0f, 0.0f,
                     1.0f, 1.0f,
 
@@ -62,7 +89,7 @@ Cube_05_01::Cube_05_01(float size) : _size(size) {
                     1.0f, 1.0f,
                     0.0f, 1.0f,
 
-                    0.0f, 0.0f,   //right
+                    0.0f, 0.0f,							// Cara lateral derecha
                     1.0f, 0.0f,
                     1.0f, 1.0f,
 
@@ -70,7 +97,7 @@ Cube_05_01::Cube_05_01(float size) : _size(size) {
                     1.0f, 1.0f,
                     0.0f, 1.0f,
 
-                    0.0f, 0.0f,   //back
+                    0.0f, 0.0f,							// Cara trasera
                     1.0f, 0.0f,
                     1.0f, 1.0f,
 
@@ -78,7 +105,7 @@ Cube_05_01::Cube_05_01(float size) : _size(size) {
                     1.0f, 1.0f,
                     0.0f, 1.0f,
 
-                    0.0f, 0.0f,   //left
+                    0.0f, 0.0f,							// Cara lateral izquierda
                     1.0f, 0.0f,
                     1.0f, 1.0f,
 
@@ -86,7 +113,7 @@ Cube_05_01::Cube_05_01(float size) : _size(size) {
                     1.0f, 1.0f,
                     0.0f, 1.0f,
 
-                    0.0f, 0.0f,   //bottom
+                    0.0f, 0.0f,							// Cara inferior
                     1.0f, 0.0f,
                     1.0f, 1.0f,
 
@@ -94,7 +121,7 @@ Cube_05_01::Cube_05_01(float size) : _size(size) {
                     1.0f, 1.0f,
                     0.0f, 1.0f,
 
-                    0.0f, 0.0f,   //top
+                    0.0f, 0.0f,							// Cara superior
                     1.0f, 0.0f,
                     1.0f, 1.0f,
 
@@ -102,7 +129,8 @@ Cube_05_01::Cube_05_01(float size) : _size(size) {
                     1.0f, 1.0f,
                     0.0f, 1.0f};
 
-    float normals[] = { 0.0f, 0.0f, 1.0f,  //front
+	// Posición de los vectores normales
+    float normals[] = { 0.0f, 0.0f, 1.0f,				// Cara delantera
                         0.0f, 0.0f, 1.0f,
                         0.0f, 0.0f, 1.0f,
 
@@ -110,7 +138,7 @@ Cube_05_01::Cube_05_01(float size) : _size(size) {
                         0.0f, 0.0f, 1.0f,
                         0.0f, 0.0f, 1.0f,
 
-                        1.0f, 0.0f, 0.0f,  //right
+                        1.0f, 0.0f, 0.0f,				// Cara lateral derecha
                         1.0f, 0.0f, 0.0f,
                         1.0f, 0.0f, 0.0f,
 
@@ -118,7 +146,7 @@ Cube_05_01::Cube_05_01(float size) : _size(size) {
                         1.0f, 0.0f, 0.0f,
                         1.0f, 0.0f, 0.0f,
 
-                        0.0f, 0.0f, -1.0f,  //back
+                        0.0f, 0.0f, -1.0f,				// Cara trasera
                         0.0f, 0.0f, -1.0f,
                         0.0f, 0.0f, -1.0f,
 
@@ -126,7 +154,7 @@ Cube_05_01::Cube_05_01(float size) : _size(size) {
                         0.0f, 0.0f, -1.0f,
                         0.0f, 0.0f, -1.0f,
 
-                        -1.0f, 0.0f, 0.0f,  //left
+                        -1.0f, 0.0f, 0.0f,				// Cara lateral izquierda
                         -1.0f, 0.0f, 0.0f,
                         -1.0f, 0.0f, 0.0f,
 
@@ -134,7 +162,7 @@ Cube_05_01::Cube_05_01(float size) : _size(size) {
                         -1.0f, 0.0f, 0.0f,
                         -1.0f, 0.0f, 0.0f,
 
-                        0.0f, -1.0f, 0.0f,  //bottom
+                        0.0f, -1.0f, 0.0f,				// Cara inferior
                         0.0f, -1.0f, 0.0f,
                         0.0f, -1.0f, 0.0f,
 
@@ -142,7 +170,7 @@ Cube_05_01::Cube_05_01(float size) : _size(size) {
                         0.0f, -1.0f, 0.0f,
                         0.0f, -1.0f, 0.0f,
 
-                        0.0f, 1.0f, 0.0f,  //top
+                        0.0f, 1.0f, 0.0f,				// Cara superior
                         0.0f, 1.0f, 0.0f,
                         0.0f, 1.0f, 0.0f,
 
@@ -150,12 +178,15 @@ Cube_05_01::Cube_05_01(float size) : _size(size) {
                         0.0f, 1.0f, 0.0f,
                         0.0f, 1.0f, 0.0f};
 
-    uint32_t indices[] = { 0, 1, 2,       3 , 4, 5,  //front
-                            6,7,8, 9,10, 11, //right
-                            12, 13, 14, 15, 16, 17, //back
-                            18, 19, 20, 21, 22, 23, //left
-                            24, 25, 26, 27, 28, 29, //bottom
-                            30, 31, 32, 33, 34, 35 }; //top
+    uint32_t indices[] = { 0,  1,  2,    3,  4,  5,		// Cara delantera
+                           6,  7,  8,    9, 10, 11,		// Cara lateral derecha
+                          12, 13, 14,   15, 16, 17,		// Cara trasera
+                          18, 19, 20,   21, 22, 23,		// Cara lateral izquierda
+                          24, 25, 26,   27, 28, 29,		// Cara inferior
+                          30, 31, 32,   33, 34, 35 };	// Cara superior
 
-    uploadData(positions, uvs, normals, indices);
+    uploadData(positions, uvs, normals, indices);		// Se suben los datos
 }
+//--------------------------------------------CONSTRUCTOR CUBE_05_01--------------------------------------------//
+
+//////////////////////////////////////////////////////////////////FIN DE CÓDIGO//////////////////////////////////////////////////////////////////
