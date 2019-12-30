@@ -1,8 +1,8 @@
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  CURSO:	     Máster en Diseño y Desarrollo de Videojuegos
+  CURSO:	   Máster en Diseño y Desarrollo de Videojuegos
   ASIGNATURA:  Programación I
-  DESCRIPCIÓN: Vertex.vs del ejercicio 5_04
+  DESCRIPCIÓN: Vertex.vs del ejercicio 6_01
   PROGRAMADOR: Daniel Dopico Graña
   FECHA:       Diciembre 2019
   VERSIÓN:     1.0
