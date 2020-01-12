@@ -17,6 +17,8 @@ include(cmake/compiler.cmake)
 
 set(ENGINE_SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/camera.cpp
+	${CMAKE_CURRENT_LIST_DIR}/src/engine/camera_06_01.cpp
+	${CMAKE_CURRENT_LIST_DIR}/src/engine/camera_06_02.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/deps.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/shader.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/texture.cpp
@@ -26,11 +28,12 @@ set(ENGINE_SRC_FILES
 	${CMAKE_CURRENT_LIST_DIR}/src/engine/geometry/cube_05_02.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/geometry/geometry.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/geometry/quad.cpp
-	${CMAKE_CURRENT_LIST_DIR}/src/engine/geometry/quad_05_04.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/geometry/sphere.cpp)
 
 set(ENGINE_HEADER_FILES
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/camera.hpp
+	${CMAKE_CURRENT_LIST_DIR}/include/engine/camera_06_01.hpp
+	${CMAKE_CURRENT_LIST_DIR}/include/engine/camera_06_02.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/input.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/shader.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/texture.hpp
@@ -40,7 +43,6 @@ set(ENGINE_HEADER_FILES
 	${CMAKE_CURRENT_LIST_DIR}/include/engine/geometry/cube_05_02.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/geometry/geometry.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/geometry/quad.hpp
-	${CMAKE_CURRENT_LIST_DIR}/include/engine/geometry/quad_05_04.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/geometry/sphere.hpp)
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/src/engine/ PREFIX "Source Files" FILES ${ENGINE_SRC_FILES})
