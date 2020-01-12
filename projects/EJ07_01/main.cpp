@@ -24,16 +24,20 @@
 #include "engine/window.hpp"				// Librería de manejo de ventanas
 #include "engine/geometry/sphere.hpp"		// Librería de manejo de geometría esfera
 #include "engine/geometry/quad.hpp"			// Librería de manejo de geometría quad
+
+#include <iostream>							// Librería de funciones del sistema
 //--------------------------------------LIBRERÍAS--------------------------------------//
 
 //----------------------------------------VARIABLES----------------------------------------//
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));		// Definición de la cámara
 glm::vec3 lightPos(4.0f, 1.0f, 0.0f);			// Posición de la luz
 glm::vec3 lightColor(1.0f, 1.0f, 1.0f);			// Color de la luz
+glm::vec3 lightPos2 = lightPos;
 
 float lastFrame = 0.0f;							// Variable de último frame
 float lastX, lastY;								// Variable de última coordenada x, y
 bool firstMouse = true;							// Variable de primer movimiento de ratón
+int inicio = 0;
 //----------------------------------------VARIABLES----------------------------------------//
 
 //----------------------------------------FUNCIÓN HANDLEINPUT----------------------------------------//
@@ -116,6 +120,10 @@ void render(const Geometry& object, const Geometry& light, const Shader& s_phong
 	s_light.use();																						// Se ejecuta la luz
 
 	glm::mat4 model = glm::mat4(1.0f);																	// Posición de la cámara
+
+	float rotacion = static_cast<float>(glfwGetTime())* glm::radians(20.0f);
+	model = glm::rotate(model, rotacion, glm::vec3(0.0f, 1.0f, 0.0f));
+
 	model = glm::translate(model, lightPos);															// Traslación con luz
 	model = glm::scale(model, glm::vec3(0.25f));														// Escalado
 	s_light.set("model", model);																		// Se aplican los cambios al model
@@ -138,13 +146,17 @@ void render(const Geometry& object, const Geometry& light, const Shader& s_phong
 	s_phong.set("lightColor", lightColor);
 
 	s_phong.set("ambientStrength", 0.2f);
-	s_phong.set("lightPos", lightPos);
+	rotacion = static_cast<float>(glfwGetTime())* glm::radians(20.0f);
+	lightPos2.z -= 4 * sin(rotacion);
+	lightPos2.x += 4 * cos(rotacion);
+	s_phong.set("lightPos", lightPos2);
 
 	s_phong.set("viewPos", camera.getPosition());
 	s_phong.set("shininess", 64);
 	s_phong.set("specularStrength", 0.6f);
 
 	object.render();
+	inicio = 1;
 }
 //---------------------------------------------------------------FUNCIÓN RENDER---------------------------------------------------------------//
 
