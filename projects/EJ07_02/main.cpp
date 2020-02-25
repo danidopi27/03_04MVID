@@ -156,8 +156,8 @@ int main(int, char* []) {
 
 	glClearColor(0.0f, 0.3f, 0.6f, 1.0f);														// Color de la ventana
 
-	const Shader s_phong("../projects/EJ07_01/phong.vs", "../projects/EJ07_01/blinn.fs");		// Carga del shader de phong
-	const Shader s_light("../projects/EJ07_01/light.vs", "../projects/EJ07_01/light.fs");		// Carga del shader de light
+	const Shader s_phong("../projects/EJ07_02/phong.vs", "../projects/EJ07_02/blinn.fs");		// Carga del shader de phong
+	const Shader s_light("../projects/EJ07_02/light.vs", "../projects/EJ07_02/light.fs");		// Carga del shader de light
 	const Sphere sphere(1.0f, 50, 50);
 
 	Texture tex("../assets/textures/blue_blocks.jpg", Texture::Format::RGB);					// Creación de la textura
