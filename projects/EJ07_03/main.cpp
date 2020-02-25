@@ -133,7 +133,7 @@ void render(const Geometry& object, const Geometry& light, const Shader& s_phong
 	s_phong.set("view", view);
 	s_phong.set("proj", proj);
 
-	glm::mat3 normalMat = glm::inverse(glm::transpose(glm::mat3(model)));
+	glm::mat3 normalMat = glm::inverse(glm::transpose(glm::mat3(view*model)));							// Transformación espacio vista
 	s_phong.set("normalMat", normalMat);
 
 	s_phong.set("objectColor", glm::vec3(0.6f, 0.5f, 0.2f));
@@ -156,8 +156,8 @@ int main(int, char* []) {
 
 	glClearColor(0.0f, 0.3f, 0.6f, 1.0f);														// Color de la ventana
 
-	const Shader s_phong("../projects/EJ07_01/phong.vs", "../projects/EJ07_01/blinn.fs");		// Carga del shader de phong
-	const Shader s_light("../projects/EJ07_01/light.vs", "../projects/EJ07_01/light.fs");		// Carga del shader de light
+	const Shader s_phong("../projects/EJ07_03/phong.vs", "../projects/EJ07_03/blinn.fs");		// Carga del shader de phong
+	const Shader s_light("../projects/EJ07_03/light.vs", "../projects/EJ07_03/light.fs");		// Carga del shader de light
 	const Sphere sphere(1.0f, 50, 50);
 
 	Texture tex("../assets/textures/blue_blocks.jpg", Texture::Format::RGB);					// Creación de la textura
