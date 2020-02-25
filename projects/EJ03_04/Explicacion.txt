@@ -1,0 +1,8 @@
+Los colores que tienen los vértices se corresponden con las coordenadas de los vértices en RGB.
+
+1.- Punto (0.5, -0.5, 0): Color rojo ya que el componente G es negativo por lo que será equivalente a 0.
+2.- Punto (-0.5, -0.5, 0): Color negro ya que los componentes R y G son negativos y son interpretados como 0.
+3.- Punto (0.0, 0.5, 0.0): Color verde
+4.- Punto (0, 0, 0): Color negro 
+
+Entre los colores de los vértices se produce una interpolación para la definición del color correspondiente.
