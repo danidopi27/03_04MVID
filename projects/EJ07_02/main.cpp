@@ -2,7 +2,7 @@
 
   CURSO:	   Máster en Diseño y Desarrollo de Videojuegos
   ASIGNATURA:  Programación I
-  DESCRIPCIÓN: Ejercicio 7_01
+  DESCRIPCIÓN: Ejercicio 7_02
   PROGRAMADOR: Daniel Dopico Graña
   FECHA:       Diciembre 2019
   VERSIÓN:     1.0
