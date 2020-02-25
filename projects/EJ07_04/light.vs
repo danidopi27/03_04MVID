@@ -1,26 +1,26 @@
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  CURSO:	   Máster en Diseño y Desarrollo de Videojuegos
-  ASIGNATURA:  Programación I
-  DESCRIPCIÓN: Lights.vs del ejercicio 7_01
-  PROGRAMADOR: Daniel Dopico Graña
+  CURSO:	   Mï¿½ster en Diseï¿½o y Desarrollo de Videojuegos
+  ASIGNATURA:  Programaciï¿½n I
+  DESCRIPCIï¿½N: Lights.vs del ejercicio 7_04
+  PROGRAMADOR: Daniel Dopico Graï¿½a
   FECHA:       Diciembre 2019
-  VERSIÓN:     1.0
+  VERSIï¿½N:     1.0
 
 *//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////CÓDIGO//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////Cï¿½DIGO//////////////////////////////////////////////////////////////////////
 #version 330 core
 
-layout (location=0) in vec3 aPos;                               // La posición 0 corresponde a posición
-layout (location=1) in vec2 aUV;                                // La posición 1 corresponde a textura
-layout (location=2) in vec3 aNormal;                            // La posición 2 corresponde a vector normal
+layout (location=0) in vec3 aPos;                               // La posiciï¿½n 0 corresponde a posiciï¿½n
+layout (location=1) in vec2 aUV;                                // La posiciï¿½n 1 corresponde a textura
+layout (location=2) in vec3 aNormal;                            // La posiciï¿½n 2 corresponde a vector normal
 
 uniform mat4 model;                                             // Matriz de espacio mundo
 uniform mat4 view;                                              // Matriz de vista
-uniform mat4 proj;                                              // Matriz de proyección
+uniform mat4 proj;                                              // Matriz de proyecciï¿½n
 
 void main() {
-    gl_Position = proj * view * model * vec4(aPos, 1.0);		// Cálculo de la posición del objeto
+    gl_Position = proj * view * model * vec4(aPos, 1.0);		// Cï¿½lculo de la posiciï¿½n del objeto
 }
-////////////////////////////////////////////////////////////////////FIN DE CÓDIGO//////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////FIN DE Cï¿½DIGO//////////////////////////////////////////////////////////////////

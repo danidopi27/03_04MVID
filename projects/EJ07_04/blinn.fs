@@ -1,15 +1,15 @@
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  CURSO:	   Máster en Diseño y Desarrollo de Videojuegos
-  ASIGNATURA:  Programación I
-  DESCRIPCIÓN: Blinn.fs del ejercicio 7_01
-  PROGRAMADOR: Daniel Dopico Graña
+  CURSO:	   Mï¿½ster en Diseï¿½o y Desarrollo de Videojuegos
+  ASIGNATURA:  Programaciï¿½n I
+  DESCRIPCIï¿½N: Blinn.fs del ejercicio 7_04
+  PROGRAMADOR: Daniel Dopico Graï¿½a
   FECHA:       Diciembre 2019
-  VERSIÓN:     1.0
+  VERSIï¿½N:     1.0
 
 *//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////CÓDIGO//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////Cï¿½DIGO//////////////////////////////////////////////////////////////////////
 #version 330 core
 
 out vec4 FragColor;																// Salida de framents
@@ -22,25 +22,25 @@ uniform vec3 lightColor;														// Color de luz
 
 uniform float ambientStrength;													// Fuerza del ambiente
 
-uniform vec3 lightPos;															// Posición de la luz
-uniform vec3 viewPos;															// Posición de la vista
+uniform vec3 lightPos;															// Posiciï¿½n de la luz
+uniform vec3 viewPos;															// Posiciï¿½n de la vista
 uniform int shininess;															// Valor de brillo
 uniform float specularStrength;													// Fuerza de la componente especular
 
 void main() {
-    vec3 ambient = ambientStrength * lightColor;								// Cálculo del ambiente
+    vec3 ambient = ambientStrength * lightColor;								// Cï¿½lculo del ambiente
 
-    vec3 norm = normalize(normal);												// Cálculo de normales
-    vec3 lightDir = normalize(lightPos - fragPos);								// Dirección de la luz
-    float diff = max(dot(norm, lightDir), 0.0);									// Diferencia entre normales y dirección de la luz
-    vec3 diffuse = diff * lightColor;											// Cálculo de la difusión
+    vec3 norm = normalize(normal);												// Cï¿½lculo de normales
+    vec3 lightDir = normalize(lightPos - fragPos);								// Direcciï¿½n de la luz
+    float diff = max(dot(norm, lightDir), 0.0);									// Diferencia entre normales y direcciï¿½n de la luz
+    vec3 diffuse = diff * lightColor;											// Cï¿½lculo de la difusiï¿½n
 
-    vec3 viewDir = normalize(viewPos - fragPos);								// Vista de la dirección de la luz
-    vec3 halfwayDir = normalize(lightDir + viewDir);							// Cálculo del reflejo de luz
-    float spec = pow(max(dot(norm, halfwayDir), 0.0), shininess);				// Cálculo de componente especular
-    vec3 specular = spec * specularStrength * lightColor;						// Composición de componente especular
+    vec3 viewDir = normalize(viewPos - fragPos);								// Vista de la direcciï¿½n de la luz
+    vec3 halfwayDir = normalize(lightDir + viewDir);							// Cï¿½lculo del reflejo de luz
+    float spec = pow(max(dot(norm, halfwayDir), 0.0), shininess);				// Cï¿½lculo de componente especular
+    vec3 specular = spec * specularStrength * lightColor;						// Composiciï¿½n de componente especular
 
-    vec3 phong = (ambient + diffuse + specular) * objectColor;					// Cálculo del phong
+    vec3 phong = (ambient + diffuse + specular) * objectColor;					// Cï¿½lculo del phong
     FragColor = vec4(phong, 1.0f);												// Se asigna la luz
 }
-////////////////////////////////////////////////////////////////////FIN DE CÓDIGO//////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////FIN DE Cï¿½DIGO//////////////////////////////////////////////////////////////////
