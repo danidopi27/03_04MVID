@@ -81,7 +81,6 @@ void render(uint32_t VAO, const Shader& shader) {
 	glClear(GL_COLOR_BUFFER_BIT);									// Se borra el buffer
 
 	shader.use();													// Se ejecuta el shader
-	shader.set("addColor", 0.2f, 0.0f, 0.0f);						// Se añade un color al shader
 
 	glBindVertexArray(VAO);											// Se asigna el VAO
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);		// Se dibujan los elementos
@@ -96,7 +95,7 @@ int main(int, char* []) {
 
 	uint32_t VBO, EBO;																			// Creación del VBO y el EBO
 	const uint32_t VAO = createVertexData(&VBO, &EBO);											// Creación de los vértices
-	const Shader shader("../projects/EJ03_01/vertex.vs", "../projects/EJ03_01/fragment.fs");	// Carga de los shaders
+	const Shader shader("../projects/EJ03_04/vertex.vs", "../projects/EJ03_04/fragment.fs");	// Carga de los shaders
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);													// Modo polygon para las lineas y relleno
 

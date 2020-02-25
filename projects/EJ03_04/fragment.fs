@@ -2,7 +2,7 @@
 
   CURSO:	     Máster en Diseño y Desarrollo de Videojuegos
   ASIGNATURA:  Programación I
-  DESCRIPCIÓN: Fragments.vs del ejercicio 3_01
+  DESCRIPCIÓN: Fragments.vs del ejercicio 3_04
   PROGRAMADOR: Daniel Dopico Graña
   FECHA:       Diciembre 2019
   VERSIÓN:     1.0
