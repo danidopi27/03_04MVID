@@ -53,21 +53,17 @@ void render(const Geometry& cube_1, const Geometry& cube_2, const Geometry& cube
 	cube_2.render();																								// Se pinta la geometría
 	cube_3.render();																								// Se pinta la geometría
 
-	glm::mat4 model_2 = glm::mat4(1.0f);																			// Matriz diagonal
-	model_2 = glm::rotate(model_2, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
-	glm::mat4 view_2 = glm::mat4(1.0f);																				// Matriz diagonal
-	view_2 = glm::translate(view_2, glm::vec3(0.0f, 0.0f, -3.0f));													// Cámara acercandose a pantalla
-
-	glm::mat4 proj_2 = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);						// Perspectiva de la visión
+    model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(0.0f, -1.0f, -30.0f));
+    model = glm::rotate(model, glm::radians(90.0f), glm::vec3(-1.0f, 0.0f, 0.0f));									// Perspectiva de la visión
 
 	shader_2.use();																									// Se ejecuta el shader
 
 	tex.use(shader_2, "tex", 0);																					// Uso de la textura
 
-	shader_2.set("model", model_2);																						// Uso de la matriz model
-	shader_2.set("view", view_2);																						// Uso de la matriz view
-	shader_2.set("proj", proj_2);																						// Uso de la matriz proj
+	shader_2.set("model", model);																						// Uso de la matriz model
+	shader_2.set("view", view);																						// Uso de la matriz view
+	shader_2.set("proj", proj);																						// Uso de la matriz proj
 
 	suelo.render();																									// Se pinta la geometría
 }
@@ -94,7 +90,7 @@ int main(int, char* []) {
 	float radio_3 = 0.3f;																		// Radio del cubo
 	const Cube_05_01 cube_3(center_3, radio_3);													// Creación del cubo
 
-	const Quad suelo(1.0f);
+	const Quad suelo(40.0f);
 
 	Texture tex("../assets/textures/bricks_specular.png", Texture::Format::RGB);				// Creación de la textura
 
