@@ -33,9 +33,17 @@ Camera_06_02::Camera_06_02(float posX, float posY, float posZ, float upX, float 
 //--------------------------------------------------------------------------------FUNCIÓN GETVIEWMATRIX-------------------------------------------------------------------------------//
 glm::mat4 Camera_06_02::getViewMatrix() const {
 	/*return glm::lookAt(_position, _position + _front, _up);*/
-	glm::mat4 mat1 = glm::mat4(glm::vec4(_right.x, _right.y, _right.z, 0), glm::vec4(_up.x, _up.y, _up.z, 0), glm::vec4(_front.x, _front.y, _front.z, 0), glm::vec4(0, 0, 0, 1));
-	glm::mat4 mat2 = glm::mat4(glm::vec4(1, 0, 0, -1 * _position.x), glm::vec4(0, 1, 0, -1 * _position.y), glm::vec4(0, 0, 1, -1 * _position.z), glm::vec4(0, 0, 0, 1));
-	glm::mat4 lookAt = mat1 * mat2;
+	glm::mat4 matrix1 = glm::mat4(1.0f);
+    glm::mat4 matrix2 = glm::mat4(1.0f);
+
+    matrix1[0] = glm::vec4(-_right,0);
+    matrix1[1] = glm::vec4(_up, 0);
+    matrix1[2] = glm::vec4(_front, 0);
+    
+    matrix2[3] = glm::vec4(_position, 1);
+
+	glm::mat4 lookAt = glm::mat4(glm::transpose(matrix1)) * matrix2;
+
 	return lookAt;
 }
 //--------------------------------------------------------------------------------FUNCIÓN GETVIEWMATRIX-------------------------------------------------------------------------------//
