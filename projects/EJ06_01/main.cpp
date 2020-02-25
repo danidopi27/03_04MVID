@@ -23,6 +23,7 @@
 #include "engine/texture.hpp"				// Librería de manejo de texturas
 #include "engine/window.hpp"				// Librería de manejo de ventanas
 #include "engine/geometry/sphere.hpp"		// Librería de manejo de geometría esfera
+#include "engine/geometry/quad.hpp"		// Librería de manejo de geometría quad
 //------------------------------------------LIBRERÍAS------------------------------------------//
 
 //--------------------------------------------VARIABLES--------------------------------------------//
@@ -101,7 +102,7 @@ void onScrollMoved(float x, float y) {
 //----------------------------FUNCIÓN ONSCROLLMOVED----------------------------//
 
 //---------------------------------------------------------------------FUNCIÓN RENDER---------------------------------------------------------------------//
-void render(const Geometry& cube_1, const Geometry& cube_2, const Geometry& cube_3, const Shader& shader, Texture& tex) {
+void render(const Geometry& cube_1, const Geometry& cube_2, const Geometry& cube_3, const Geometry& suelo, const Shader& shader, const Shader& shader_2, Texture& tex) {
 	// Función de renderización
 
 	glClear(GL_COLOR_BUFFER_BIT);																						// Borrado de la pantalla
@@ -123,6 +124,20 @@ void render(const Geometry& cube_1, const Geometry& cube_2, const Geometry& cube
 	cube_1.render();																									// Se pinta la geometría
 	cube_2.render();																									// Se pinta la geometría
 	cube_3.render();																									// Se pinta la geometría
+
+	model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(0.0f, -1.0f, -30.0f));
+	model = glm::rotate(model, glm::radians(90.0f), glm::vec3(-1.0f, 0.0f, 0.0f));									// Perspectiva de la visión
+
+	shader_2.use();																									// Se ejecuta el shader
+
+	tex.use(shader_2, "tex", 0);																					// Uso de la textura
+
+	shader_2.set("model", model);																						// Uso de la matriz model
+	shader_2.set("view", view);																						// Uso de la matriz view
+	shader_2.set("proj", proj);																						// Uso de la matriz proj
+
+	suelo.render();
 }
 //---------------------------------------------------------------------FUNCIÓN RENDER---------------------------------------------------------------------//
 
@@ -133,6 +148,7 @@ int main(int, char* []) {
 	glClearColor(0.0f, 0.3f, 0.6f, 1.0f);														// Color de la ventana
 
 	const Shader shader("../projects/EJ06_01/vertex.vs", "../projects/EJ06_01/fragment.fs");	// Carga de los shaders
+	const Shader shader_2("../projects/EJ05_04/vertex.vs", "../projects/EJ05_04/fragment.fs");	// Carga de los shaders
 	float center_1[3] = { -0.5f, 0.0f, 1.0f };													// Coordenadas del centro
 	float radio_1 = 0.1f;																		// Radio del cubo
 	const Cube_05_01 cube_1(center_1, radio_1);													// Creación del cubo
@@ -144,6 +160,8 @@ int main(int, char* []) {
 	float center_3[3] = { 0.25f, 0.75f, 1.0f };													// Coordenadas del centro
 	float radio_3 = 0.3f;																		// Radio del cubo
 	const Cube_05_01 cube_3(center_3, radio_3);													// Creación del cubo
+
+	const Quad suelo(40.0f);
 
 	Texture tex("../assets/textures/blue_blocks.jpg", Texture::Format::RGB);					// Creación de la textura
 
@@ -161,12 +179,14 @@ int main(int, char* []) {
 		lastFrame = currentFrame;																// Se guarda el último frame
 
 		handleInput(deltaTime);																	// Se controlan las entradas
-		render(cube_1, cube_2, cube_3, shader, tex);											// Se renderiza la esfera, shader y texturas
+		render(cube_1, cube_2, cube_3, suelo, shader, shader_2, tex);							// Se renderiza el cubo, shader y texturas
 		window->frame();																		// Se dibuja la ventana
 	}
 
 	return 0;
 }
+//----------------------------------------------------------------FUNCIÓN MAIN----------------------------------------------------------------//
+
 //----------------------------------------------------------------FUNCIÓN MAIN----------------------------------------------------------------//
 
 ////////////////////////////////////////////////////////////////////FIN DE CÓDIGO////////////////////////////////////////////////////////////////////
