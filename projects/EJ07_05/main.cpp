@@ -205,7 +205,7 @@ int main(int, char* []) {
 
 	const Shader s_flat("../projects/EJ07_05/flat.vs", "../projects/EJ07_05/flat.fs");			// Carga del shader de flat
 	const Shader s_gouraud("../projects/EJ07_05/gouraud.vs", "../projects/EJ07_05/gouraud.fs");	// Carga del shader de gouraud
-	const Shader s_phong("../projects/EJ07_05/phong.vs", "../projects/EJ07_05/phong.fs");		// Carga del shader de gouraud
+	const Shader s_phong("../projects/EJ07_05/phong.vs", "../projects/EJ07_05/phong.fs");		// Carga del shader de phong
 	const Shader s_light("../projects/EJ07_05/light.vs", "../projects/EJ07_05/light.fs");		// Carga del shader de light
 	const Sphere sphere(0.5f, 20, 20);
 
