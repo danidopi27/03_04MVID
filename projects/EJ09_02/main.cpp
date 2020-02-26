@@ -1,34 +1,39 @@
-/*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+﻿/*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  CURSO:	   M�ster en Dise�o y Desarrollo de Videojuegos
-  ASIGNATURA:  Programaci�n I
-  DESCRIPCI�N: Ejercicio 9_02
-  PROGRAMADOR: Daniel Dopico Gra�a
+  CURSO:	   Máster en Diseño y Desarrollo de Videojuegos
+  ASIGNATURA:  Programación I
+  DESCRIPCIÓN: Ejercicio 9_02
+  PROGRAMADOR: Daniel Dopico Graña
   FECHA:       Febrero 2020
-  VERSI�N:     1.0
+  VERSIÓN:     1.0
 
 *//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////C�DIGO//////////////////////////////////////////////////////////////////////
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <glm/gtc/matrix_transform.hpp>
+///////////////////////////////////////////////////////////////////////CÓDIGO//////////////////////////////////////////////////////////////////////
+//--------------------------------------LIBRER�AS--------------------------------------//
+#include <glad/glad.h>						// Librería de manejo de GLAD
+#include <GLFW/glfw3.h>						// Librería de manejo de GLFW
+#include <glm/gtc/matrix_transform.hpp>		// Librería de transformaci�n de matrices
 
 #include "engine/camera.hpp"
-#include "engine/geometry/cube.hpp"
-#include "engine/input.hpp"
-#include "engine/shader.hpp"
-#include "engine/texture.hpp"
-#include "engine/window.hpp"
-#include "engine/geometry/sphere.hpp"
-#include "engine/geometry/quad.hpp"
+#include "engine/geometry/cube.hpp"			// Librería de manejo de geometr�a cubo
+#include "engine/input.hpp"					// Librería de manejo de inputs
+#include "engine/shader.hpp"				// Librería de manejo de shaders
+#include "engine/texture.hpp"				// Librería de manejo de texturas
+#include "engine/window.hpp"				// Librería de manejo de ventanas
+#include "engine/geometry/sphere.hpp"		// Librería de manejo de geometría esfera
+#include "engine/geometry/quad.hpp"			// Librería de manejo de geometría quad
+#include "engine/geometry/teapot.hpp"		// Librería de manejo de geometría tetera
 
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
-glm::vec3 lightPos(0.0f, 2.0f, 0.0f);
-glm::vec3 lightDir(0.0f, -1.0f, 0.0f);
-const float k_lightSpeed = 2.5f;
+#include <iostream>							// Librer�a de funciones del sistema
+//--------------------------------------LIBRER�AS--------------------------------------//
 
-glm::vec3 cubePositions[] = {
+//----------------------------------------VARIABLES----------------------------------------//
+Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));		// Definici�n de la c�mara
+glm::vec3 lightPos(0.0f, 2.0f, 0.0f);			// Posición de la luz
+glm::vec3 lightDir(0.0f, 0.0f, -1.0f);			// Dirección de la luz
+
+glm::vec3 cubePositions[] = {					// Posiciones del cubo
 	glm::vec3(4.0f, 0.0f, 0.0f),
 	glm::vec3(-4.0f, 0.0f, 0.0f),
 	glm::vec3(0.0f, 0.0f, 4.0f),
@@ -39,84 +44,100 @@ glm::vec3 cubePositions[] = {
 	glm::vec3(-4.0f, 0.0f, -4.0f),
 };
 
-float lastFrame = 0.0f;
-float lastX, lastY;
-bool firstMouse = true;
+float lastFrame = 0.0f;							// Variable de �ltimo frame
+float lastX, lastY;								// Variable de �ltima coordenada x, y
+bool firstMouse = true;							// Variable de primer movimiento de rat�n
+//----------------------------------------VARIABLES----------------------------------------//
 
+//----------------------------------------FUNCI�N HANDLEINPUT----------------------------------------//
 void handleInput(float dt) {
-	Input* input = Input::instance();
+	// Funci�n que maneja las entradas
 
+	Input* input = Input::instance();								// Objeto input
+
+	// Si la tecla W est� pulsada
 	if (input->isKeyPressed(GLFW_KEY_W)) {
-		camera.handleKeyboard(Camera::Movement::Forward, dt);
+		camera.handleKeyboard(Camera::Movement::Forward, dt);		// Movimiento hacia adelante
 	}
+	// Si la tecla S est� pulsada
 	if (input->isKeyPressed(GLFW_KEY_S)) {
-		camera.handleKeyboard(Camera::Movement::Backward, dt);
+		camera.handleKeyboard(Camera::Movement::Backward, dt);		// Movimiento hacia atr�s
 	}
+	// Si la tecla A est� pulsada
 	if (input->isKeyPressed(GLFW_KEY_A)) {
-		camera.handleKeyboard(Camera::Movement::Left, dt);
+		camera.handleKeyboard(Camera::Movement::Left, dt);			// Movimiento hacia la izquierda
 	}
+	// Si la tecla D est� pulsada
 	if (input->isKeyPressed(GLFW_KEY_D)) {
-		camera.handleKeyboard(Camera::Movement::Right, dt);
-	}
-	if (input->isKeyPressed(GLFW_KEY_DOWN)) {
-		lightDir += dt * k_lightSpeed * glm::vec3(0.0f, 0.0f, 1.0f);
-	}
-	if (input->isKeyPressed(GLFW_KEY_UP)) {
-		lightDir -= dt * k_lightSpeed * glm::vec3(0.0f, 0.0f, 1.0f);
-	}
-	if (input->isKeyPressed(GLFW_KEY_LEFT)) {
-		lightDir -= dt * k_lightSpeed * glm::vec3(1.0f, 0.0f, 0.0f);
-	}
-	if (input->isKeyPressed(GLFW_KEY_RIGHT)) {
-		lightDir += dt * k_lightSpeed * glm::vec3(1.0f, 0.0f, 0.0f);
+		camera.handleKeyboard(Camera::Movement::Right, dt);			// Movimiento hacia la derecha
 	}
 }
+//----------------------------------------FUNCI�N HANDLEINPUT----------------------------------------//
 
+//----------------------------------FUNCI�N ONKEYPRESS----------------------------------//
 void onKeyPress(int key, int action) {
+	// Funci�n que controla las pulsaciones de teclas
+
+	// Si se pulsa la tecla Q
 	if (key == GLFW_KEY_Q && action == GLFW_PRESS) {
-		Window::instance()->setCaptureMode(true);
+		Window::instance()->setCaptureMode(true);		// Se pone el modo captura ON
 	}
-
+	// Si se pulsa la tecla E
 	if (key == GLFW_KEY_E && action == GLFW_PRESS) {
-		Window::instance()->setCaptureMode(false);
+		Window::instance()->setCaptureMode(false);		// Se pone el modo captura OFF
 	}
 }
+//----------------------------------FUNCI�N ONKEYPRESS----------------------------------//
 
+//----------------------------------------FUNCI�N ONMOUSEMOVED----------------------------------------//
 void onMouseMoved(float x, float y) {
+	// Funci�n que controla el movimiento del rat�n
+
+	// Si es el primer movimiento del rat�n
 	if (firstMouse) {
-		firstMouse = false;
-		lastX = x;
-		lastY = y;
+		firstMouse = false;								// Se realiz� primer movimiento de rat�n
+		lastX = x;										// Guardado de la posici�n de x
+		lastY = y;										// Guardado de la posici�n de y
 	}
 
-	const float xoffset = x - lastX;
-	const float yoffset = lastY - y;
-	lastX = x;
-	lastY = y;
+	const float xoffset = x - lastX;					// Offset en x (posici�n actual - anterior)
+	const float yoffset = lastY - y;					// Offset en x (anterior posici�n - actual)
+	lastX = x;											// Actualizaci�n de la posici�n anterior en x
+	lastY = y;											// Actualizaci�n de la posici�n anterior en y
 
-	camera.handleMouseMovement(xoffset, yoffset);
+	camera.handleMouseMovement(xoffset, yoffset);		// Ajuste del movimiento de la c�mara en x, y
 }
+//----------------------------------------FUNCI�N ONMOUSEMOVED----------------------------------------//
 
+//----------------------------FUNCI�N ONSCROLLMOVED----------------------------//
 void onScrollMoved(float x, float y) {
-	camera.handleMouseScroll(y);
-}
+	// Funci�n que controla el movimiento scroll
 
+	camera.handleMouseScroll(y);		// Ajuste del movimiento de la c�mara 
+}
+//----------------------------FUNCI�N ONSCROLLMOVED----------------------------//
+
+//-------------------------------------------------------------------FUNCI�N RENDER-------------------------------------------------------------------//
 void render(const Geometry& floor, const Geometry& object, const Geometry& light, const Shader& s_phong, const Shader& s_light,
 	const Texture& t_albedo, const Texture& t_specular) {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	// Funci�n de renderizaci�n
 
-	glm::mat4 view = camera.getViewMatrix();
-	glm::mat4 proj = glm::perspective(glm::radians(camera.getFOV()), 800.0f / 600.0f, 0.1f, 100.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);													// Borrado de pantalla y profundidad
 
-	s_light.use();
+	glm::mat4 view = camera.getViewMatrix();															// Posici�n de la vista
+	glm::mat4 proj = glm::perspective(glm::radians(camera.getFOV()), 800.0f / 600.0f, 0.1f, 100.0f);	// Perspectiva de la visi�n
 
-	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::translate(model, lightPos);
-	model = glm::scale(model, glm::vec3(0.25f));
-	s_light.set("model", model);
-	s_light.set("view", view);
-	s_light.set("proj", proj);
-	s_light.set("lightColor", 1.0f, 1.0f, 1.0f);
+	glm::vec3 lightDiffuse(0.5f, 0.5f, 0.5f);
+
+	s_light.use();																						// Se ejecuta la luz
+
+	glm::mat4 model = glm::mat4(1.0f);																	// Posici�n de la c�mara
+	model = glm::translate(model, lightPos);															// Traslaci�n con luz
+	model = glm::scale(model, glm::vec3(0.25f));														// Escalado
+	s_light.set("model", model);																		// Se aplican los cambios al model
+	s_light.set("view", view);																			// Se aplican los cambios al view
+	s_light.set("proj", proj);																			// Se aplican los cambios al proj
+	s_light.set("lightColor", lightDiffuse);															// Se aplican los cambios de color
 
 	light.render();
 
@@ -134,7 +155,7 @@ void render(const Geometry& floor, const Geometry& object, const Geometry& light
 
 	s_phong.set("viewPos", camera.getPosition());
 
-	s_phong.set("light.position", lightPos);
+	s_phong.set("light.position", camera.getPosition());
 	s_phong.set("light.direction", lightDir);
 	s_phong.set("light.ambient", 0.1f, 0.1f, 0.1f);
 	s_phong.set("light.diffuse", 0.5f, 0.5f, 0.5f);
@@ -162,42 +183,46 @@ void render(const Geometry& floor, const Geometry& object, const Geometry& light
 		object.render();
 	}
 }
+//-------------------------------------------------------------------FUNCI�N RENDER-------------------------------------------------------------------//
 
+//----------------------------------------------------------------FUNCI�N MAIN----------------------------------------------------------------//
 int main(int, char* []) {
-	Window* window = Window::instance();
+	Window* window = Window::instance();														// Creaci�n de la ventana
 
-	glClearColor(0.0f, 0.3f, 0.6f, 1.0f);
+	glClearColor(0.0f, 0.3f, 0.6f, 1.0f);														// Color de la ventana
 
-	const Shader s_phong("../projects/AG09_03/phong.vs", "../projects/AG09_03/blinn.fs");
-	const Shader s_light("../projects/AG09_03/light.vs", "../projects/AG09_03/light.fs");
-	const Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);
-	const Texture t_specular("../assets/textures/bricks_specular.png", Texture::Format::RGB);
-	const Sphere sphere(1.0f, 50, 50);
+	const Shader s_phong("../projects/EJ09_02/phong.vs", "../projects/EJ09_02/blinn.fs");		// Carga del shader de phong
+	const Shader s_light("../projects/EJ09_02/light.vs", "../projects/EJ09_02/light.fs");		// Carga del shader de light
+	const Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);		// Textura albedo
+	const Texture t_specular("../assets/textures/bricks_specular.png", Texture::Format::RGB);	// Textura specular
+	const Sphere sphere(1.0f, 50, 50);															// Creaci�n de esfera
+	const Quad quad(1.0f);																		// Creaci�n de quad
 	const Cube cube(1.0f);
-	const Quad quad(1.0f);
 
-	Texture tex("../assets/textures/blue_blocks.jpg", Texture::Format::RGB);
+	Texture tex("../assets/textures/blue_blocks.jpg", Texture::Format::RGB);					// Textura de objeto
 
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
+	glEnable(GL_CULL_FACE);																		// Activaci�n del cull face
+	glCullFace(GL_BACK);																		// Ocultar la cara trasera
 
-	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);																	// Activaci�n del cull depth test
 	glDepthFunc(GL_LESS);
 
-	Input::instance()->setKeyPressedCallback(onKeyPress);
-	Input::instance()->setMouseMoveCallback(onMouseMoved);
-	Input::instance()->setScrollMoveCallback(onScrollMoved);
+	Input::instance()->setKeyPressedCallback(onKeyPress);										// Asociac�n de callback de tecla pulsada
+	Input::instance()->setMouseMoveCallback(onMouseMoved);										// Asociac�n de callback de rat�n movido
+	Input::instance()->setScrollMoveCallback(onScrollMoved);									// Asociac�n de callback de scroll movido
 
+	// Mientras la ventana siga abierta
 	while (window->alive()) {
-		const float currentFrame = glfwGetTime();
-		const float deltaTime = currentFrame - lastFrame;
-		lastFrame = currentFrame;
+		const float currentFrame = glfwGetTime();												// Se obtiene el frame actual
+		const float deltaTime = currentFrame - lastFrame;										// Se calcula el tiempo transcurrido
+		lastFrame = currentFrame;																// Se guarda el �ltimo frame
 
 		handleInput(deltaTime);
-		render(quad, cube, sphere, s_phong, s_light, t_albedo, t_specular);
-		window->frame();
+		render(quad, cube, sphere, s_phong, s_light, t_albedo, t_specular);						// Se renderiza la esfera y la luz
+		window->frame();																		// Se dibuja la ventana
 	}
 
 	return 0;
 }
-////////////////////////////////////////////////////////////////////FIN DE C�DIGO////////////////////////////////////////////////////////////////////
+//----------------------------------------------------------------FUNCI�N MAIN----------------------------------------------------------------//
+////////////////////////////////////////////////////////////////////FIN DE CÓDIGO////////////////////////////////////////////////////////////////////
