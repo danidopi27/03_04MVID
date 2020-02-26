@@ -159,8 +159,8 @@ int main(int, char* []) {
 
 	glClearColor(0.0f, 0.3f, 0.6f, 1.0f);														// Color de la ventana
 
-	const Shader s_phong("../projects/EJ08_01/phong.vs", "../projects/EJ08_01/blinn.fs");		// Carga del shader de phong
-	const Shader s_light("../projects/EJ08_01/light.vs", "../projects/EJ08_01/light.fs");		// Carga del shader de light
+	const Shader s_phong("../projects/EJ08_02/phong.vs", "../projects/EJ08_02/blinn.fs");		// Carga del shader de phong
+	const Shader s_light("../projects/EJ08_02/light.vs", "../projects/EJ08_02/light.fs");		// Carga del shader de light
 
 	const Sphere sphere(0.4f, 50, 50);															// Creaci�n de esfera
 
