@@ -48,7 +48,7 @@ void main() {
     vec3 viewDir = normalize(viewPos - fragPos);								// Vista de la direcci�n de la luz
     vec3 halfwayDir = normalize(lightDir + viewDir);							// C�lculo del reflejo de luz
     float spec = pow(max(dot(norm, halfwayDir), 0.0), material.shininess);				// C�lculo de componente especular
-    vec3 specular = spec * vec3(texture(material.specular, uv)) * light.specular;					// Composici�n de componente especular
+    vec3 specular = spec * (vec3(1.0f, 1.0f, 1.0f) - vec3(texture(material.specular, uv))) * light.specular;					// Composici�n de componente especular
 
     vec3 phong = ambient + diffuse + specular;					// C�lculo del phong
     FragColor = vec4(phong, 1.0f);												// Se asigna la luz
