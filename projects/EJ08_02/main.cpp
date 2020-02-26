@@ -99,7 +99,7 @@ void onMouseMoved(float x, float y) {
 
 //----------------------------FUNCI�N ONSCROLLMOVED----------------------------//
 void onScrollMoved(float x, float y) {
-	// Funci�n que controla el movimiento scroll
+	// Función que controla el movimiento scroll
 
 	camera.handleMouseScroll(y);		// Ajuste del movimiento de la c�mara 
 }
