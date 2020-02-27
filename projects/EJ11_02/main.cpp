@@ -43,6 +43,12 @@ glm::vec3 quadColor[] = {
 	glm::vec3(0.0f, 0.0f, 1.0f),
 };
 
+float quadAlpha[]{
+	0.5f,
+	0.4f,
+	0.3f,
+};
+
 float lastFrame = 0.0f;							// Variable de �ltimo frame
 float lastX, lastY;								// Variable de �ltima coordenada x, y
 bool firstMouse = true;							// Variable de primer movimiento de rat�n
@@ -190,12 +196,12 @@ void render(const Geometry& quad, const Shader& s_phong, const Shader& s_blend, 
 			s_blend.set("light.diffuse", 0.5f, 0.5f, 0.5f);
 			s_blend.set("light.specular", 1.0f, 1.0f, 1.0f);
 
-			s_blend.set("material.ambient", 0.1f * quadColor[i]);
-			s_blend.set("material.diffuse", 0.5f * quadColor[i]);
-			s_blend.set("material.specular", 1.0f * quadColor[i]);
+			s_blend.set("material.ambient", 0.1f * quadColor[i - 1]);
+			s_blend.set("material.diffuse", 0.5f * quadColor[i - 1]);
+			s_blend.set("material.specular", 1.0f * quadColor[i - 1]);
 			s_blend.set("material.shininess", 32);
 
-			s_blend.set("material.alpha", 0.3f * (4 - i));
+			s_blend.set("material.alpha",quadAlpha[i - 1]);
 
 			quad.render();
 		}
