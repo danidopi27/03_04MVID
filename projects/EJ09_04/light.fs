@@ -2,7 +2,7 @@
 
   CURSO:	   M�ster en Dise�o y Desarrollo de Videojuegos
   ASIGNATURA:  Programaci�n I
-  DESCRIPCI�N: Lights.fs del ejercicio 9_02
+  DESCRIPCI�N: Lights.fs del ejercicio 9_04
   PROGRAMADOR: Daniel Dopico Gra�a
   FECHA:       Febrero 2020
   VERSI�N:     1.0
