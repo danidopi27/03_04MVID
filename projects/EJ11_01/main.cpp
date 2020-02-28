@@ -194,6 +194,7 @@ int main(int, char* []) {
 	glCullFace(GL_BACK);																		// Ocultar la cara trasera
 
 	glEnable(GL_DEPTH_TEST);																	// Activaci�n del cull depth test
+	glDepthFunc(GL_LESS);
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
