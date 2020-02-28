@@ -36,6 +36,9 @@ struct Light {
 };
 uniform Light light;
 
+uniform vec3 viewPos;
+uniform mat3 normalMat;
+
 void main() {
     vec3 T = normalize(normalMat * tangent);
     vec3 N = normalize(normalMat * fNormal);

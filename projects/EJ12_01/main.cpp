@@ -174,8 +174,8 @@ int main(int, char* []) {
 
 	glClearColor(0.0f, 0.3f, 0.6f, 1.0f);														// Color de la ventana
 
-    const Shader s_phong("../projects/AG12/phong.vs", "../projects/AG12/blinn.fs");				// Carga del shader de phong
-    const Shader s_normal("../projects/AG12/normal.vs", "../projects/AG12/normal.fs");			// Carga del shader de normal
+    const Shader s_phong("../projects/EJ12_01/phong.vs", "../projects/EJ12_01/blinn.fs");		// Carga del shader de phong
+    const Shader s_normal("../projects/EJ12_01/normal.vs", "../projects/EJ12_01/normal.fs");	// Carga del shader de normal
     const Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);		// Textura albedo
     const Texture t_specular("../assets/textures/bricks_specular.png", Texture::Format::RGB);	// Textura specular
     const Texture t_normal("../assets/textures/bricks_normal.png", Texture::Format::RGB);		// Textura normal
