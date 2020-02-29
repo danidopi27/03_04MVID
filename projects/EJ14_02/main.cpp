@@ -2,7 +2,7 @@
 
   CURSO:	   Máster en Diseño y Desarrollo de Videojuegos
   ASIGNATURA:  Programación I
-  DESCRIPCIÓN: Ejercicio 14_01
+  DESCRIPCIÓN: Ejercicio 14_02
   PROGRAMADOR: Daniel Dopico Graña
   FECHA:       Febrero 2020
   VERSIÓN:     1.0
@@ -260,10 +260,10 @@ int main(int, char* []) {
 
 	glClearColor(0.6f, 0.6f, 0.6f, 1.0f);														// Color de la ventana	
 
-    const Shader s_phong("../projects/EJ14_01/phong.vs", "../projects/EJ14_01/blinn.fs");		// Carga del shader de phong
-    const Shader s_depth("../projects/EJ14_01/depth.vs", "../projects/EJ14_01/depth.fs");		// Carga del shader de depth
-    const Shader s_debug("../projects/EJ14_01/debug.vs", "../projects/EJ14_01/debug.fs");		// Carga del shader de debug
-    const Shader s_light("../projects/EJ14_01/light.vs", "../projects/EJ14_01/light.fs");		// Carga del shader de light
+    const Shader s_phong("../projects/EJ14_02/phong.vs", "../projects/EJ14_02/blinn.fs");		// Carga del shader de phong
+    const Shader s_depth("../projects/EJ14_02/depth.vs", "../projects/EJ14_02/depth.fs");		// Carga del shader de depth
+    const Shader s_debug("../projects/EJ14_02/debug.vs", "../projects/EJ14_02/debug.fs");		// Carga del shader de debug
+    const Shader s_light("../projects/EJ14_02/light.vs", "../projects/EJ14_02/light.fs");		// Carga del shader de light
     const Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);		// Textura albedo
     const Texture t_specular("../assets/textures/bricks_specular.png", Texture::Format::RGB);	// Textura specular
     const Quad quad(2.0f);																		// Creación del quad
