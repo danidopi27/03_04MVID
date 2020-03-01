@@ -362,10 +362,42 @@ void onScrollMoved(float x, float y) {
 }
 //----------------------------FUNCIÓN ONSCROLLMOVED----------------------------//
 
+//-----------------------------------------------------------FUNCIÓN CREATEFBO-----------------------------------------------------------//
+std::pair<uint32_t, uint32_t> createFBO() {
+	uint32_t fbo;
+	glGenFramebuffers(1, &fbo);
+	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+
+	uint32_t depthMap;
+	glGenTextures(1, &depthMap);
+	glBindTexture(GL_TEXTURE_2D, depthMap);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, k_shadow_width, k_shadow_height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	float borderColor[]{ 1.0f, 1.0f, 1.0f, 1.0f };
+	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
+	glDrawBuffer(GL_NONE);
+	glReadBuffer(GL_NONE);
+
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+		std::cout << "Framebuffer Incomplete" << std::endl;
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	return std::make_pair(fbo, depthMap);
+}
+//-----------------------------------------------------------FUNCIÓN CREATEFBO-----------------------------------------------------------//
+
 //-------------------------------------------------------------------FUNCIÓN RENDER-------------------------------------------------------------------//
 void render(const Geometry& floor, const Geometry& object, const Geometry& light, const Model& enemy, const Model& coins,
-			const Shader& s_phong, const Shader& s_light, const Shader& s_normal,
-			const Texture& t_albedo, const Texture& t_specular, const Texture& t_normal) {
+			const Shader& s_phong, const Shader& s_light, const Shader& s_normal, const Shader& s_depth, const Shader& s_debug,
+			const Texture& t_albedo, const Texture& t_specular, const Texture& t_normal,
+			const uint32_t fbo, const uint32_t fbo_texture) {
 	// Función de renderizaci�n
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);													// Borrado de pantalla y profundidad
@@ -529,6 +561,8 @@ int main(int, char* []) {
 	const Shader s_phong("../projects/FINAL/phong.vs", "../projects/FINAL/blinn.fs");			// Carga del shader de phong
 	const Shader s_light("../projects/FINAL/light.vs", "../projects/FINAL/light.fs");			// Carga del shader de light
 	const Shader s_normal("../projects/FINAL/normal.vs", "../projects/FINAL/normal.fs");		// Carga del shader de normal
+	const Shader s_depth("../projects/FINAL/depth.vs", "../projects/FINAL/depth.fs");			// Carga del shader de depth
+	const Shader s_debug("../projects/FINAL/debug.vs", "../projects/FINAL/debug.fs");			// Carga del shader de debug
 
 	// Texturas
 	const Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);		// Textura albedo
@@ -541,6 +575,8 @@ int main(int, char* []) {
 	const Cube cube(1.0f);
 	const Model enemy("../assets/models/Spider/Only_Spider_with_Animations_Export.obj");		// Creación del modelo
 	const Model coins("../assets/models/Cofre/chest.obj");										// Creación del modelo
+
+	auto fbo = createFBO();
 
 	glEnable(GL_CULL_FACE);																		// Activación del cull face
 	glCullFace(GL_BACK);																		// Ocultar la cara trasera
@@ -564,9 +600,9 @@ int main(int, char* []) {
 		handleInput(deltaTime);
 
 		render(quad, cube, sphere, enemy, coins,												// Se renderizan los objetos y la luz
-			   s_phong, s_light, s_normal,														// Se renderizan los shaders
-			   t_albedo, t_specular, t_normal);													// Se renderizan las texturas
-
+			   s_phong, s_light, s_normal, s_depth, s_debug,									// Se renderizan los shaders
+			   t_albedo, t_specular, t_normal,													// Se renderizan las texturas
+			   fbo.first, fbo.second);
 		window->frame();																		// Se dibuja la ventana
 	}
 
