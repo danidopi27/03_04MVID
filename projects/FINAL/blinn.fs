@@ -1,15 +1,15 @@
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  CURSO:	   M�ster en Dise�o y Desarrollo de Videojuegos
-  ASIGNATURA:  Programaci�n I
-  DESCRIPCI�N: Blinn.fs del ejercicio 9_02
-  PROGRAMADOR: Daniel Dopico Gra�a
+  CURSO:	   Máster en Diseño y Desarrollo de Videojuegos
+  ASIGNATURA:  Programación I
+  DESCRIPCIÓN: Blinn.fs del ejercicio FINAL
+  PROGRAMADOR: Daniel Dopico Graña
   FECHA:       Febrero 2020
-  VERSI�N:     1.0
+  VERSIÓN:     1.0
 
 *//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////C�DIGO//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////CÓDIGO//////////////////////////////////////////////////////////////////////
 #version 330 core
 
 out vec4 FragColor;																// Salida de framents
@@ -25,7 +25,30 @@ struct Material {
 };
 uniform Material material;
 
+struct DirLight {
+    vec3 direction;
+
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+};
+uniform DirLight dirLight;
+
 struct PointLight {
+    vec3 position;
+
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+
+    float constant;
+    float linear;
+    float quadratic;
+};
+#define NUMBER_POINT_LIGHTS 2
+uniform PointLight pointLight[NUMBER_POINT_LIGHTS];
+
+struct SpotLight {
     vec3 position;
     vec3 direction;
 
@@ -41,11 +64,45 @@ struct PointLight {
     float outerCutOff;
 };
 
-uniform PointLight light;
+#define NUMBER_SPOT_LIGHTS 1
+uniform SpotLight spotLight[NUMBER_SPOT_LIGHTS];
 
 uniform vec3 viewPos;
 
-void main() {
+vec3 calcDirectionalLight(DirLight light, vec3 normal, vec3 viewDir, vec3 albedoMap, vec3 specularMap) {
+    vec3 ambient = albedoMap * light.ambient;
+
+    vec3 lightDir = normalize(-light.direction);
+    float diff = max(dot(normal, lightDir), 0.0);
+    vec3 diffuse = diff * albedoMap * light.diffuse;
+
+    vec3 halfwayDir = normalize(lightDir + viewDir);
+    float spec = pow(max(dot(normal, halfwayDir), 0.0), material.shininess);
+    vec3 specular = spec * specularMap * light.specular;
+
+    return ambient + diffuse + specular;
+}
+
+vec3 calcPointLight(PointLight light, vec3 normal, vec3 viewDir, vec3 fragPos, vec3 albedoMap, vec3 specularMap) {
+    float distance = length(light.position - fragPos);
+    float attenuation = 1.0 / (light.constant +
+        light.linear * distance +
+        light.quadratic * distance * distance);
+
+    vec3 ambient = albedoMap * light.ambient;
+
+    vec3 lightDir = normalize(light.position - fragPos);
+    float diff = max(dot(normal, lightDir), 0.0);
+    vec3 diffuse = diff * albedoMap * light.diffuse;
+
+    vec3 halfwayDir = normalize(lightDir + viewDir);
+    float spec = pow(max(dot(normal, halfwayDir), 0.0), material.shininess);
+    vec3 specular = spec * specularMap * light.specular;
+
+    return (ambient + diffuse + specular) * attenuation;
+}
+
+vec3 calcSpotLight(SpotLight light, vec3 normal, vec3 viewDir, vec3 fragPos, vec3 albedoMap, vec3 specularMap) {
     float distance = length(light.position - fragPos);
     float attenuation = 1.0 / (light.constant +
         light.linear * distance +
@@ -59,17 +116,34 @@ void main() {
     float diff = max(dot(norm, lightDir), 0.0);
     vec3 diffuse = diff * albedo * light.diffuse;
 
-    vec3 viewDir = normalize(viewPos - fragPos);
     vec3 halfwayDir = normalize(lightDir + viewDir);
     float spec = pow(max(dot(norm, halfwayDir), 0.0), material.shininess);
     vec3 specular = spec * vec3(texture(material.specular, uv)) * light.specular;
-
-    // Borde suavizado
+    
     float theta = dot(lightDir, normalize(-light.direction));
     float epsilon = light.cutOff - light.outerCutOff;
     float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);
 
-    vec3 phong = (ambient + (diffuse * intensity) + (specular * intensity)) * attenuation;
-    FragColor = vec4(phong, 1.0f);
+    return (ambient + (diffuse * intensity) + (specular * intensity)) * attenuation;
 }
-////////////////////////////////////////////////////////////////////FIN DE C�DIGO//////////////////////////////////////////////////////////////////
+
+void main() {
+    vec3 albedo = vec3(texture(material.diffuse, uv));
+    vec3 specular = vec3(texture(material.specular, uv));
+
+    vec3 norm = normalize(normal);
+    vec3 viewDir = normalize(viewPos - fragPos);
+
+    vec3 finalColor = calcDirectionalLight(dirLight, norm, viewDir, albedo, specular);
+
+    for (int i = 0; i < NUMBER_POINT_LIGHTS; ++i) {
+     finalColor += calcPointLight(pointLight[i], norm, viewDir, fragPos, albedo, specular);
+	}
+
+    for (int i = 0; i < NUMBER_SPOT_LIGHTS; ++i) {
+     finalColor += calcSpotLight(spotLight[i], norm, viewDir, fragPos, albedo, specular);
+	}
+
+    FragColor = vec4(finalColor, 1.0);
+}
+////////////////////////////////////////////////////////////////////FIN DE CÓDIGO//////////////////////////////////////////////////////////////////

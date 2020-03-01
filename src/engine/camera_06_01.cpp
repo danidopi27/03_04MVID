@@ -1,20 +1,20 @@
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  CURSO:	   Máster en Diseño y Desarrollo de Videojuegos
-  ASIGNATURA:  Programación I
-  DESCRIPCIÓN: Librería de generación y movimiento de la cámara
-  PROGRAMADOR: Daniel Dopico Graña
+  CURSO:	   Mï¿½ster en Diseï¿½o y Desarrollo de Videojuegos
+  ASIGNATURA:  Programaciï¿½n I
+  DESCRIPCIï¿½N: Librerï¿½a de generaciï¿½n y movimiento de la cï¿½mara
+  PROGRAMADOR: Daniel Dopico Graï¿½a
   FECHA:       Diciembre 2019
-  VERSIÓN:     1.0
+  VERSIï¿½N:     1.0
 
 *//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////CÓDIGO//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////Cï¿½DIGO//////////////////////////////////////////////////////////////////////
 
-//---------------LIBRERÍAS---------------//
+//---------------LIBRERï¿½AS---------------//
 #include "engine/camera_06_01.hpp"
 #include <glm/gtc/matrix_transform.hpp>
-//---------------LIBRERÍAS---------------//
+//---------------LIBRERï¿½AS---------------//
 
 //-----------------------------------------------CONSTRUCTOR-----------------------------------------------//
 Camera_06_01::Camera_06_01(const glm::vec3& position, const glm::vec3& up, float yaw, float pitch)
@@ -30,25 +30,25 @@ Camera_06_01::Camera_06_01(float posX, float posY, float posZ, float upX, float 
 }
 //-------------------------------------------------------CONSTRUCTOR-------------------------------------------------------//
 
-//-------------------FUNCIÓN GETVIEWMATRIX-------------------//
+//-------------------FUNCIï¿½N GETVIEWMATRIX-------------------//
 glm::mat4 Camera_06_01::getViewMatrix() const {
     return glm::lookAt(_position, _position + _front, _up);
 }
-//-------------------FUNCIÓN GETVIEWMATRIX-------------------//
+//-------------------FUNCIï¿½N GETVIEWMATRIX-------------------//
 
-//-----------FUNCIÓN GETFOV-----------//
+//-----------FUNCIï¿½N GETFOV-----------//
 float Camera_06_01::getFOV() const {
     return _fov;
 }
-//-----------FUNCIÓN GETFOV-----------//
+//-----------FUNCIï¿½N GETFOV-----------//
 
-//-------------FUNCIÓN GETPOSITION-------------//
+//-------------FUNCIï¿½N GETPOSITION-------------//
 glm::vec3 Camera_06_01::getPosition() const {
     return _position;
 }
-//-------------FUNCIÓN GETPOSITION-------------//
+//-------------FUNCIï¿½N GETPOSITION-------------//
 
-//--------------------FUNCIÓN UPDATECAMERAVECTORS--------------------//
+//--------------------FUNCIï¿½N UPDATECAMERAVECTORS--------------------//
 void Camera_06_01::updateCameraVectors() {
     glm::vec3 front;
     front.x = cos(glm::radians(_yaw)) * cos(glm::radians(_pitch));
@@ -59,9 +59,9 @@ void Camera_06_01::updateCameraVectors() {
     _right = glm::normalize(glm::cross(_front, _worldUp));
     _up = glm::normalize(glm::cross(_right, _front));
 }
-//--------------------FUNCIÓN UPDATECAMERAVECTORS--------------------//
+//--------------------FUNCIï¿½N UPDATECAMERAVECTORS--------------------//
 
-//---------------------------------------------FUNCIÓN HANDLEKEYBOARD---------------------------------------------//
+//---------------------------------------------FUNCIï¿½N HANDLEKEYBOARD---------------------------------------------//
 void Camera_06_01::handleKeyboard(Movement direction, float dt) {
     const float velocity = k_Speed * dt;
 
@@ -73,9 +73,9 @@ void Camera_06_01::handleKeyboard(Movement direction, float dt) {
         default:;
     }
 }
-//---------------------------------------------FUNCIÓN HANDLEKEYBOARD---------------------------------------------//
+//---------------------------------------------FUNCIï¿½N HANDLEKEYBOARD---------------------------------------------//
 
-//----------------------------------FUNCIÓN HANDLEMOUSEMOVEMENT----------------------------------//
+//----------------------------------FUNCIï¿½N HANDLEMOUSEMOVEMENT----------------------------------//
 void Camera_06_01::handleMouseMovement(float xoffset, float yoffset, bool constrainPitch) {
     const float xoff = xoffset * k_Sensitivity;
     const float yoff = yoffset * k_Sensitivity;
@@ -90,14 +90,14 @@ void Camera_06_01::handleMouseMovement(float xoffset, float yoffset, bool constr
 
     updateCameraVectors();
 }
-//----------------------------------FUNCIÓN HANDLEMOUSEMOVEMENT----------------------------------//
+//----------------------------------FUNCIï¿½N HANDLEMOUSEMOVEMENT----------------------------------//
 
-//---------------FUNCIÓN HANDLEMOUSESCROLL---------------//
+//---------------FUNCIï¿½N HANDLEMOUSESCROLL---------------//
 void Camera_06_01::handleMouseScroll(float yoffset) {
     if (_fov >= 1.0f && _fov <= 45.0f) _fov -= yoffset;
     if (_fov <= 1.0f) _fov = 1.0f;
     if (_fov >= 45.0f) _fov = 45.0f;
 }
-//---------------FUNCIÓN HANDLEMOUSESCROLL---------------//
+//---------------FUNCIï¿½N HANDLEMOUSESCROLL---------------//
 
-///////////////////////////////////////////////////////////////////FIN DE CÓDIGO///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////FIN DE Cï¿½DIGO///////////////////////////////////////////////////////////////////

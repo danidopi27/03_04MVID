@@ -19,6 +19,7 @@ set(ENGINE_SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/camera.cpp
 	${CMAKE_CURRENT_LIST_DIR}/src/engine/camera_06_01.cpp
 	${CMAKE_CURRENT_LIST_DIR}/src/engine/camera_06_02.cpp
+	${CMAKE_CURRENT_LIST_DIR}/src/engine/camera_FINAL.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/deps.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/mesh.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/engine/model.cpp
@@ -37,6 +38,7 @@ set(ENGINE_HEADER_FILES
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/camera.hpp
 	${CMAKE_CURRENT_LIST_DIR}/include/engine/camera_06_01.hpp
 	${CMAKE_CURRENT_LIST_DIR}/include/engine/camera_06_02.hpp
+	${CMAKE_CURRENT_LIST_DIR}/include/engine/camera_FINAL.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/input.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/mesh.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/engine/model.hpp
