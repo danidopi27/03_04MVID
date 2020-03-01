@@ -142,8 +142,11 @@ std::pair<uint32_t, uint32_t> createFBO() {
 //-----------------------------------------------------------FUNCIÓN CREATEFBO-----------------------------------------------------------//
 
 //-------------------------------------------------------------------FUNCI�N RENDERSCENE-------------------------------------------------------------------//
-void renderScene(const Shader& s_phong, const Geometry& quad, const Geometry& cube, const Geometry& sphere,
-const Texture& t_albedo, const Texture& t_specular, const Shader& s_light, glm::mat4 view, glm::mat4 proj) {
+void renderScene(const Geometry& quad, const Geometry& cube, const Geometry& sphere,
+                 const Shader& s_phong, const Shader& s_light,
+                 const Texture& t_albedo, const Texture& t_specular,  
+                 glm::mat4 view, glm::mat4 proj) {
+                     
     t_albedo.use(s_phong, "material.diffuse", 0);
     t_specular.use(s_phong, "material.specular", 1);
 

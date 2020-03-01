@@ -241,8 +241,8 @@ int main(int, char* []) {
 
 	glClearColor(0.0f, 0.3f, 0.6f, 1.0f);														// Color de la ventana
 
-	const Shader s_phong("../projects/EJ09_04/phong.vs", "../projects/EJ09_04/blinn.fs");		// Carga del shader de phong
-	const Shader s_light("../projects/EJ09_04/light.vs", "../projects/EJ09_04/light.fs");		// Carga del shader de light
+	const Shader s_phong("../projects/EJ10_01/phong.vs", "../projects/EJ10_01/blinn.fs");		// Carga del shader de phong
+	const Shader s_light("../projects/EJ10_01/light.vs", "../projects/EJ10_01/light.fs");		// Carga del shader de light
 	const Texture t_albedo("../assets/textures/bricks_albedo.png", Texture::Format::RGB);		// Textura albedo
 	const Texture t_specular("../assets/textures/bricks_specular.png", Texture::Format::RGB);	// Textura specular
 	const Sphere sphere(1.0f, 50, 50);															// Creaci�n de esfera
